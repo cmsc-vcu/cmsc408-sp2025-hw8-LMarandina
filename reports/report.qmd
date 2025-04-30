@@ -51,10 +51,8 @@ How many records are in the country table?
 # (skills: select, aggregate)
 
 run_sql_and_return_html(cnx,"""
-select
-  count(*) as "Row Count"
-from
-  world_bank_data.wdi_country
+select count(*) as "Row Count"
+from world_bank_data.wdi_country
 """)
 
 ```
@@ -73,7 +71,7 @@ select
   *
 from 
   world_bank_data.wdi_country
-limit 5
+limit 10
 """)
 
 ```
@@ -91,10 +89,11 @@ List all non-countries.
 ## (skills: select, where)
 
 run_sql_and_return_html(cnx,"""
-  select *
-  from world_bank_data.wdi_country
-  where country_code = ''
-    or country_code is null
+SELECT
+    *
+FROM world_bank_data.wdi_country
+WHERE region is NULL
+ORDER BY `short name` DESC
 """)
 ```
 
@@ -120,17 +119,15 @@ drop table if exists wdi_country;
 # create table
 execute_ddl(cnx,"""
 create table wdi_country as
-select *
-from world_bank_data.wdi_country
-where country_code is not null and country_code != ''
+select * from world_bank_data.wdi_country
+where region is NOT NULL
 """)
 ```
 
 ```{python}
 # show number of records
 run_sql_and_return_html(cnx,"""
-select count(*) as "Country Row Count"
-from wdi_country
+select count(*) from wdi_country
 """)
 ```
 

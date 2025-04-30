@@ -51,8 +51,7 @@ How many records are in the country table?
 # (skills: select, aggregate)
 
 run_sql_and_return_html(cnx,"""
-select count(*) as "Row Count"
-from world_bank_data.wdi_country
+SELECT COUNT(*) AS "Row Count" FROM wdi_country;
 """)
 
 ```
